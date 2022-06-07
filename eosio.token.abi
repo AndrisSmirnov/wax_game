@@ -1,0 +1,473 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
+    "version": "eosio::abi/1.2",
+    "types": [],
+    "structs": [
+        {
+            "name": "account",
+            "base": "",
+            "fields": [
+                {
+                    "name": "balance",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "admin_list",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "adminadd",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "admindel",
+            "base": "",
+            "fields": [
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "buildingadd",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "building",
+                    "type": "string"
+                },
+                {
+                    "name": "wood",
+                    "type": "asset"
+                },
+                {
+                    "name": "clay",
+                    "type": "asset"
+                },
+                {
+                    "name": "stone",
+                    "type": "asset"
+                },
+                {
+                    "name": "gold",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "buildingchng",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "building",
+                    "type": "string"
+                },
+                {
+                    "name": "wood",
+                    "type": "asset"
+                },
+                {
+                    "name": "clay",
+                    "type": "asset"
+                },
+                {
+                    "name": "stone",
+                    "type": "asset"
+                },
+                {
+                    "name": "gold",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "buildingdel",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "building",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "buildres_table",
+            "base": "",
+            "fields": [
+                {
+                    "name": "building",
+                    "type": "asset"
+                },
+                {
+                    "name": "wood",
+                    "type": "asset"
+                },
+                {
+                    "name": "clay",
+                    "type": "asset"
+                },
+                {
+                    "name": "stone",
+                    "type": "asset"
+                },
+                {
+                    "name": "gold",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "checkbldres",
+            "base": "",
+            "fields": [
+                {
+                    "name": "building",
+                    "type": "string"
+                },
+                {
+                    "name": "wood",
+                    "type": "asset"
+                },
+                {
+                    "name": "clay",
+                    "type": "asset"
+                },
+                {
+                    "name": "stone",
+                    "type": "asset"
+                },
+                {
+                    "name": "gold",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "close",
+            "base": "",
+            "fields": [
+                {
+                    "name": "owner",
+                    "type": "name"
+                },
+                {
+                    "name": "symbol",
+                    "type": "symbol"
+                }
+            ]
+        },
+        {
+            "name": "create",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "maximum_supply",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "currency_stats",
+            "base": "",
+            "fields": [
+                {
+                    "name": "supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "max_supply",
+                    "type": "asset"
+                },
+                {
+                    "name": "issuer",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "issue",
+            "base": "",
+            "fields": [
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "open",
+            "base": "",
+            "fields": [
+                {
+                    "name": "owner",
+                    "type": "name"
+                },
+                {
+                    "name": "symbol",
+                    "type": "symbol"
+                },
+                {
+                    "name": "ram_payer",
+                    "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "resadd",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "resource_name",
+                    "type": "asset"
+                },
+                {
+                    "name": "price",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "reschange",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "resource_name",
+                    "type": "asset"
+                },
+                {
+                    "name": "price",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "resdel",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "resource_name",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "resources_table",
+            "base": "",
+            "fields": [
+                {
+                    "name": "name",
+                    "type": "asset"
+                },
+                {
+                    "name": "price",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "retire",
+            "base": "",
+            "fields": [
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "transfer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "name": "adminadd",
+            "type": "adminadd",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "admindel",
+            "type": "admindel",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "buildingadd",
+            "type": "buildingadd",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "buildingchng",
+            "type": "buildingchng",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "buildingdel",
+            "type": "buildingdel",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "checkbldres",
+            "type": "checkbldres",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "close",
+            "type": "close",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "create",
+            "type": "create",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "issue",
+            "type": "issue",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "open",
+            "type": "open",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "resadd",
+            "type": "resadd",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "reschange",
+            "type": "reschange",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "resdel",
+            "type": "resdel",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "retire",
+            "type": "retire",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "transfer",
+            "type": "transfer",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "accounts",
+            "type": "account",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "admin",
+            "type": "admin_list",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "buildings",
+            "type": "buildres_table",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "resource",
+            "type": "resources_table",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "stat",
+            "type": "currency_stats",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "kv_tables": {},
+    "ricardian_clauses": [],
+    "variants": [],
+    "action_results": []
+}
