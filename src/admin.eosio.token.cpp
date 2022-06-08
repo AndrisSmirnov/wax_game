@@ -1,4 +1,7 @@
-#include <eosio.token/eosio.token.hpp>
+#include <eosio.token.hpp>
+#include <eosio.token.hpp>
+#include <atomicdata.hpp>
+#include <SimpleAssets.hpp>
 #include <map>
 
 namespace eosio
@@ -147,4 +150,70 @@ namespace eosio
       check(it != buildings_table.end(), "building with name don't exists");
       buildings_table.erase(it);
    }
+
+   //! ~~~ NFT part ~~~
+
+   void token::createcol(
+       const name &author,
+       const name &collection_name,
+       const bool &allow_notify,
+       const vector<name> authorized_accounts,
+       const vector<name> notify_accounts,
+       const double &market_fee,
+       const atomicdata::ATTRIBUTE_MAP data)
+   {
+      check(is_admin(get_self(), author), "access denied");
+      // require_auth(author);
+
+      //!!!!!!!!!!!!!!!!!!!!!!
+      atomicdata::ATTRIBUTE_MAP atmp = {};
+
+      eosio::action create_collection = eosio::action(
+          permission_level{get_self(), "active"_n},
+          NFT_PUBLISHER,
+          //  "atomicassets"_n,
+          "createcol"_n,
+          //  make_tuple("accgametown1", "accgametown1", 1, atmp, atmp, MAX_MARKET_FEE, atmp));
+          make_tuple(author, collection_name, allow_notify, authorized_accounts, notify_accounts, market_fee, data));
+      create_collection.send();
+
+      //!!!!!!!!!!!!!!!!!!!!!!
+   }
+
+   // void game::craftnft(const name username, const name nft_name)
+   // {
+   //    require_auth(username);
+   //    // BLOCK CONTRACT
+   //    auto stat = _wrkcont.find(0);
+   //    check(stat->stp_ctr, "Smart contract on pause.");
+   //    // END BLOCK CONTRACT
+
+   //    const auto user_iterator = _accounts.require_find(username.value, "Error: User not found!");
+   //    auto craft = _confcraft.find(nft_name.value);
+
+   //    check(craft != _confcraft.end(), "Error: NFT Not found!");
+
+   //    for (int i = 0; i < craft->cost_craft.size(); i++)
+   //    {
+   //       check(craft->cost_craft[i].amount <= user_iterator->balance[i].amount, "Error: You don't have enough balance!");
+   //    }
+
+   //    const auto card_info = atomicassets::assets_t(NFT_PUBLISHER, get_self().value);
+
+   //    ATTRIBUTE_MAP atmp = {};
+   //    action{
+   //        permission_level{
+   //            get_self(),
+   //            "active"_n},
+   //        NFT_PUBLISHER,
+   //        "mintasset"_n,
+   //        make_tuple(get_self(), NFT_COLLECTION_NAME, "buildings"_n, craft->template_id, username, atmp, atmp, asset(0, symbol("WAX", 4)))}
+   //        .send();
+
+   //    _accounts.modify(user_iterator, username, [&](auto &modified_user)
+   //                     {
+   //    for (uint8_t i = 0; i < user_iterator->balance.size(); i++) {
+   //      modified_user.balance[i].amount -= craft->cost_craft[i].amount;
+   //    } });
+   // }
 }

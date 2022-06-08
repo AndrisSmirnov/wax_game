@@ -1,4 +1,5 @@
-#include <eosio.token/eosio.token.hpp>
+#include <eosio.token.hpp>
+#include <atomicdata.hpp>
 #include "admin.eosio.token.cpp"
 #include <map>
 

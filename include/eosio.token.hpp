@@ -2,6 +2,8 @@
 
 #include <eosio/asset.hpp>
 #include <eosio/eosio.hpp>
+#include <atomicdata.hpp>
+
 #include <string>
 #include <map>
 namespace eosiosystem
@@ -33,6 +35,7 @@ namespace eosio
       string error_resources = "you can set only: ";
       map<string, string> resource_map = {{"clay", "CLY"}, {"gold", "GLD"}, {"stone", "STN"}, {"wood", "WOD"}};
       map<string, string> buildings_map = {{"clay mine", "CLM"}, {"sawmill", "SWM"}, {"stone mine", "STM"}, {"bakery", "BKR"}};
+      static constexpr name NFT_PUBLISHER = "atomicassets"_n;
 
       /**
        * Allows `issuer` account to create a token in supply of `maximum_supply`. If validation is successful a new entry in statstable for token symbol scope gets created.
@@ -119,12 +122,22 @@ namespace eosio
 
       [[eosio::action]] void buildingdel(const name &issuer, const string &building);
 
+      [[eosio::action]] void createcol(
+          const name &author,
+          const name &collection_name,
+          const bool &allow_notify,
+          const vector<name> authorized_accounts,
+          const vector<name> notify_accounts,
+          const double &market_fee,
+          const atomicdata::ATTRIBUTE_MAP data);
+
       /**
        * @brief This action issues to add `account` into `admin list`
        *
        * @param account - the name to be added to the `admin list`
        */
-      [[eosio::action]] void adminadd(const name &account);
+      [[eosio::action]] void
+      adminadd(const name &account);
 
       /**
        * @brief This action issues to delete `account` from `admin list`
@@ -159,6 +172,71 @@ namespace eosio
          const auto &ac = accountstable.get(sym_code.raw());
          return ac.balance;
       }
+
+      using create_action = eosio::action_wrapper<"create"_n, &token::create>;
+      using issue_action = eosio::action_wrapper<"issue"_n, &token::issue>;
+      using retire_action = eosio::action_wrapper<"retire"_n, &token::retire>;
+      using transfer_action = eosio::action_wrapper<"transfer"_n, &token::transfer>;
+      using open_action = eosio::action_wrapper<"open"_n, &token::open>;
+      using close_action = eosio::action_wrapper<"close"_n, &token::close>;
+
+      //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+      using adminadd_action = eosio::action_wrapper<"adminadd"_n, &token::adminadd>;
+      using admindel_action = eosio::action_wrapper<"admindel"_n, &token::admindel>;
+
+      using resadd_action = eosio::action_wrapper<"resadd"_n, &token::resadd>;
+      using reschange_action = eosio::action_wrapper<"reschange"_n, &token::reschange>;
+      using resdel_action = eosio::action_wrapper<"resdel"_n, &token::resdel>;
+
+      using buildingadd_action = eosio::action_wrapper<"buildingadd"_n, &token::buildingadd>;
+      using buildingchng_action = eosio::action_wrapper<"buildingchng"_n, &token::buildingchng>;
+      using buildingdel_action = eosio::action_wrapper<"buildingdel"_n, &token::buildingdel>;
+
+      // using createcol_action = eosio::action_wrapper<"createcol"_n, &token::createcol>;
+
+   private:
+      struct [[eosio::table]] admin_list
+      {
+         name account;
+
+         uint64_t primary_key() const { return account.value; }
+      };
+
+      struct [[eosio::table]] account
+      {
+         asset balance;
+
+         uint64_t primary_key() const { return balance.symbol.code().raw(); }
+      };
+
+      struct [[eosio::table]] currency_stats
+      {
+         asset supply;
+         asset max_supply;
+         name issuer;
+
+         uint64_t primary_key() const { return supply.symbol.code().raw(); }
+      };
+
+      struct [[eosio::table]] buildres_table
+      {
+         asset building;
+         asset wood;
+         asset clay;
+         asset stone;
+         asset gold;
+
+         uint64_t primary_key() const { return building.symbol.code().raw(); }
+      };
+
+      struct [[eosio::table]] resources_table
+      {
+         asset name;
+         asset price;
+
+         uint64_t primary_key() const { return name.symbol.code().raw(); }
+      };
 
       //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -219,69 +297,6 @@ namespace eosio
       }
 
       //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-      using create_action = eosio::action_wrapper<"create"_n, &token::create>;
-      using issue_action = eosio::action_wrapper<"issue"_n, &token::issue>;
-      using retire_action = eosio::action_wrapper<"retire"_n, &token::retire>;
-      using transfer_action = eosio::action_wrapper<"transfer"_n, &token::transfer>;
-      using open_action = eosio::action_wrapper<"open"_n, &token::open>;
-      using close_action = eosio::action_wrapper<"close"_n, &token::close>;
-
-      //! ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-      using adminadd_action = eosio::action_wrapper<"adminadd"_n, &token::adminadd>;
-      using admindel_action = eosio::action_wrapper<"admindel"_n, &token::admindel>;
-
-      using resadd_action = eosio::action_wrapper<"resadd"_n, &token::resadd>;
-      using reschange_action = eosio::action_wrapper<"reschange"_n, &token::reschange>;
-      using resdel_action = eosio::action_wrapper<"resdel"_n, &token::resdel>;
-
-      using buildingadd_action = eosio::action_wrapper<"buildingadd"_n, &token::buildingadd>;
-      using buildingchng_action = eosio::action_wrapper<"buildingchng"_n, &token::buildingchng>;
-      using buildingdel_action = eosio::action_wrapper<"buildingdel"_n, &token::buildingdel>;
-
-   private:
-      struct [[eosio::table]] admin_list
-      {
-         name account;
-
-         uint64_t primary_key() const { return account.value; }
-      };
-
-      struct [[eosio::table]] account
-      {
-         asset balance;
-
-         uint64_t primary_key() const { return balance.symbol.code().raw(); }
-      };
-
-      struct [[eosio::table]] currency_stats
-      {
-         asset supply;
-         asset max_supply;
-         name issuer;
-
-         uint64_t primary_key() const { return supply.symbol.code().raw(); }
-      };
-
-      struct [[eosio::table]] buildres_table
-      {
-         asset building;
-         asset wood;
-         asset clay;
-         asset stone;
-         asset gold;
-
-         uint64_t primary_key() const { return building.symbol.code().raw(); }
-      };
-
-      struct [[eosio::table]] resources_table
-      {
-         asset name;
-         asset price;
-
-         uint64_t primary_key() const { return name.symbol.code().raw(); }
-      };
 
       typedef eosio::multi_index<"admin"_n, admin_list> admin;
       typedef eosio::multi_index<"accounts"_n, account> accounts;
